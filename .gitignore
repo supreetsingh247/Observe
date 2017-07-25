@@ -1,0 +1,16 @@
+
+node_modules/**
+
+node_modules/nprogress/
+
+*.log
+
+node_modules/\.bin/
+
+dump\.rdb
+
+node_modules/
+
+dist/
+
+src/routes-compiled\.js
