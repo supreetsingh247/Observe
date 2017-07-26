@@ -5,7 +5,23 @@ const ChatWindow = ({ chatData }) => {
   console.log(chatData);
   return (
     <div>
-      chat
+      {chatData.map(data => (
+        <div key={data.conv_no}>
+          {data.speaker === "Rep" &&
+            <div id={data.start_time}>
+              <p>User1</p>
+              <p>{data.line}</p>
+            </div>
+          }
+          {data.speaker === "Prospect" &&
+            <div id={data.start_time}>
+              <p>User2</p>
+              <p>{data.line}</p>
+            </div>
+          }
+          </div>
+      )
+      )}
     </div>
   );
 }
