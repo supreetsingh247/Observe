@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import * as homeActions from '../actions/homeActions';
 import audioFile from '../resources/audio.mp3';
 import Header from './Header';
-import tempData from '../resources/temp';
 import ChatWindow from './ChatWindow';
 
 const styles = {
@@ -27,12 +26,12 @@ class Home extends React.Component {
     this.state = {
       stats: {},
       gettingStats: true,
-      transcript: {},
+      transcript: [],
       gettingTranscript: false,
       showPlay: true,
       showPause: false,
-      chatData: tempData,
-      displayChatData: tempData,
+      chatData: {},
+      displayChatData: {},
       searchTerm: '',
     };
     // this.test = this.test.bind(this);
@@ -72,6 +71,13 @@ class Home extends React.Component {
       this.setState({ stats: nextProps.stats });
     }
     this.setState({ gettingStats: nextProps.gettingStats });
+    if (nextProps.transcript && nextProps.transcript.length > 0) {
+      this.setState({ 
+        transcript: nextProps.transcript,
+        displayChatData: nextProps.transcript,
+      });
+    }
+    this.setState({ gettingTranscript: nextProps.gettingTranscript });
     // Update chatData and displaychatData on new props
   }
 
@@ -104,24 +110,25 @@ class Home extends React.Component {
     const keyWord = e.currentTarget.value;
     let newData = [];
     this.setState({ searchTerm: keyWord }, () => {
-      newData = this.state.chatData.filter(item => item.line.indexOf(keyWord) > -1);
+      newData = this.state.transcript.filter(item => item.line.indexOf(keyWord) > -1);
       this.setState({ displayChatData: newData });
     });  
   }
 
   render() {
     console.log(this.props.gettingTranscript);
+    const { stats, transcript, displayChatData } = this.state;
     return (
       <div>
         <Header />
         {this.state.gettingStats && 
           <p>Loading Stats</p>
         }
-        {this.state.stats && this.state.stats.talk_listen && 
+        {stats && stats.talk_listen && 
         <div>
-          <p>{this.state.stats.talk_listen} Talk to Listen Radio</p>
-          <p>{this.state.stats.works_per_minute} Words Per Minute</p>
-          <p>{this.state.stats.words_per_sentence} Words Per Sentence</p>
+          <p>{stats.talk_listen} Talk to Listen Radio</p>
+          <p>{stats.works_per_minute} Words Per Minute</p>
+          <p>{stats.words_per_sentence} Words Per Sentence</p>
         </div>
         } 
         <audio ref={(audio) => { this.audio = audio }} src={audioFile} />
@@ -158,10 +165,16 @@ class Home extends React.Component {
           type="text"
           value={this.state.searchTerm}
           onChange={this.handleChatSearch}
+          placeholder={"Search in this call"}
         />
+        {this.state.gettingTranscript && 
+          <p>Loading Transcript</p>
+        }
+        {transcript && transcript.length > 0 &&
         <ChatWindow
-          chatData={this.state.displayChatData}
+          chatData={displayChatData}
         />
+        }
       </div>
     );
   }

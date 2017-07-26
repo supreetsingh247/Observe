@@ -53,10 +53,10 @@ export function getTranscriptErrored(error) {
   };
 }
 
-export function getTranscriptSuccess(stats) {
+export function getTranscriptSuccess(transcript) {
   return {
     type: 'GET_TRANSCRIPT_SUCCESS',
-    stats,
+    transcript,
   };
 }
 
@@ -73,7 +73,7 @@ export function getTranscript() {
         return response;
       })
       .then(response => response.json())
-      .then(stats => dispatch(getTranscriptSuccess(stats)))
+      .then(transcript => dispatch(getTranscriptSuccess(transcript)))
       .catch(error => dispatch(getTranscriptErrored(error)));
   };
 }
