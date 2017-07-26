@@ -120,17 +120,12 @@ class Home extends React.Component {
     const { stats, transcript, displayChatData } = this.state;
     return (
       <div>
-        <Header />
-        {this.state.gettingStats && 
-          <p>Loading Stats</p>
-        }
-        {stats && stats.talk_listen && 
-        <div>
-          <p>{stats.talk_listen} Talk to Listen Radio</p>
-          <p>{stats.works_per_minute} Words Per Minute</p>
-          <p>{stats.words_per_sentence} Words Per Sentence</p>
-        </div>
-        } 
+        <Header 
+          talkListen={stats && stats.talk_listen}
+          wordsPerMinute={stats && stats.works_per_minute}
+          wordsPerSentence={stats && stats.words_per_sentence}
+          loadingStats={this.state.gettingStats}
+        />
         <audio ref={(audio) => { this.audio = audio }} src={audioFile} />
         <input 
           type="button"

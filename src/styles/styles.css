@@ -2,3 +2,19 @@ html *
 {
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.grey {
+  color: grey;
+}
+
+.x-small {
+  font-size: 10px;
+}
+
+.large {
+  font-size: 18px;
+}
+
+.xxx-large {
+  font-size: 26px
+}
