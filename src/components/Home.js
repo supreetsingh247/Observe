@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import * as homeActions from '../actions/homeActions';
 import audioFile from '../resources/audio.mp3';
 import Header from './Header';
+import tempData from '../resources/temp';
+import ChatWindow from './ChatWindow';
 
 const styles = {
   table : {
@@ -29,11 +31,15 @@ class Home extends React.Component {
       gettingTranscript: false,
       showPlay: true,
       showPause: false,
+      chatData: tempData,
+      displayChatData: tempData,
+      searchTerm: '',
     };
     // this.test = this.test.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
+    this.handleChatSearch = this.handleChatSearch.bind(this);
   }
 
   componentDidMount() {
@@ -66,6 +72,7 @@ class Home extends React.Component {
       this.setState({ stats: nextProps.stats });
     }
     this.setState({ gettingStats: nextProps.gettingStats });
+    // Update chatData and displaychatData on new props
   }
 
   handlePlay() {
@@ -93,9 +100,16 @@ class Home extends React.Component {
     console.log(Math.round(this.audio.currentTime));
   }
 
+  handleChatSearch(e) {
+    const keyWord = e.currentTarget.value;
+    let newData = [];
+    this.setState({ searchTerm: keyWord }, () => {
+      newData = this.state.chatData.filter(item => item.line.indexOf(keyWord) > -1);
+      this.setState({ displayChatData: newData });
+    });  
+  }
+
   render() {
-    
-    console.log(this.state.stats);
     console.log(this.props.gettingTranscript);
     return (
       <div>
@@ -140,6 +154,14 @@ class Home extends React.Component {
           min="0" max={this.state.duration} 
         /> 
         </p>
+        <input
+          type="text"
+          value={this.state.searchTerm}
+          onChange={this.handleChatSearch}
+        />
+        <ChatWindow
+          chatData={this.state.displayChatData}
+        />
       </div>
     );
   }
