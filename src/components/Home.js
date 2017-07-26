@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as homeActions from '../actions/homeActions';
 import audioFile from '../resources/audio.mp3';
-import Header from './Header';
+import Header from './Header/Header';
 import ChatWindow from './ChatWindow';
 
 const styles = {

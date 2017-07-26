@@ -1,0 +1,27 @@
+.border {
+  border-bottom: thin solid lightgrey;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 35px;
+  display: inline-flex;
+}
+
+.search {
+  position: absolute;
+  right: 30px;
+  border: thin solid white;
+  border-radius: 30px;
+  padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 10px;
+  background-color: rgba(211, 211, 211, 0.28);
+}
+
+.input {
+  background-color: rgba(211, 211, 211, 0);
+  border: none;
+  margin-right: 30px;
+  width: 160px;
+  font-size: 12px;
+} 
