@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as homeActions from '../actions/homeActions';
 import audioFile from '../resources/audio.mp3';
 import Header from './Header/Header';
-import ChatWindow from './ChatWindow';
+import Chat from './ChatSection/Chat';
 
 const styles = {
   table : {
@@ -156,19 +156,15 @@ class Home extends React.Component {
           min="0" max={this.state.duration} 
         /> 
         </p>
-        <input
-          type="text"
-          value={this.state.searchTerm}
-          onChange={this.handleChatSearch}
-          placeholder={"Search in this call"}
+        {transcript && transcript.length > 0 &&
+        <Chat 
+          searchTerm={this.state.searchTerm}
+          handleChatSearch={this.handleChatSearch}
+          displayChatData={displayChatData}
         />
+        }
         {this.state.gettingTranscript && 
           <p>Loading Transcript</p>
-        }
-        {transcript && transcript.length > 0 &&
-        <ChatWindow
-          chatData={displayChatData}
-        />
         }
       </div>
     );

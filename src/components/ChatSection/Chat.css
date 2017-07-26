@@ -1,0 +1,29 @@
+.outerDiv {
+  /* border-right: thin solid lightgray; */
+}
+
+.chat-div {
+  border-top: thin solid lightgray;
+}
+
+.search-chat {
+  margin-top: 80px;
+  padding-bottom: 10px;
+  display: inline-block;
+  border-bottom: thin solid lightgray;
+}
+
+.input-search {
+  border: none;
+}
+
+.chatBox {
+  overflow: auto;
+  height: 450px;
+  padding: 30px;
+  margin-bottom: 40px;
+  background-color: rgba(211, 211, 211, 0.17);
+  border-left: thin solid lightgray;
+  border-right: thin solid lightgray;
+  border-bottom: thin solid lightgray;
+}
