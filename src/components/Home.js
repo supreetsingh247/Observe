@@ -13,6 +13,7 @@ class Home extends React.Component {
     super(props, context);
     this.state = {
       stats: {},
+      duration: 0,
       gettingStats: true,
       transcript: [],
       gettingTranscript: false,
@@ -22,6 +23,7 @@ class Home extends React.Component {
       displayChatData: {},
       searchTerm: '',
       currentPosition: null,
+      currentTime: 0,
     };
     // this.test = this.test.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
@@ -42,10 +44,11 @@ class Home extends React.Component {
     }.bind(this);
     // Sync slider position with song current time
     this.audio.onplay = () => {
-      this.currentTimeInterval = setInterval( () => {
+      this.currentTimeInterval = setInterval(() => {
         this.slider.value = this.audio.currentTime;
         this.moveChat(this.audio.currentTime);
-        }, 500);
+        this.setState({ currentTime: this.slider.value }); 
+      }, 500);
     };
     this.audio.onpause = () => {
       clearInterval(this.currentTimeInterval);
@@ -54,6 +57,7 @@ class Home extends React.Component {
     this.slider.onchange = (e) => {
       this.audio.currentTime = e.target.value;
       this.moveChat(e.target.value);
+      this.setState({ currentTime: this.audio.currentTime });
     };
   }
 
@@ -126,6 +130,7 @@ class Home extends React.Component {
   render() {
     console.log(this.props.gettingTranscript);
     const { stats, transcript, displayChatData } = this.state;
+    const getTime = seconds => new Date(seconds * 1000).toISOString().substr(11, 8);
     return (
       <div style={{ overflowY: 'hidden' }}>
         <Header 
@@ -137,11 +142,14 @@ class Home extends React.Component {
         <audio ref={(audio) => { this.audio = audio }} src={audioFile} />
         <div clasName="container">
           <div className="row">
-            <div className="col-sm-3">
+            <div className="col-sm-2">
             </div>
-            <div className="col-sm-6" style={{ height: '180px' }}>
+            <div className="col-sm-8" style={{ height: '180px' }}>
               <div className="row">
-                <div className="col-sm-12 slider">
+                <div className="col-sm-1 slider"> 
+                  <p className="x-small grey">{getTime(this.state.currentTime)}</p> 
+                </div> 
+                <div className="col-sm-10 slider">  
                 <input 
                   ref={(slider) => { this.slider = slider }}
                   type="range"
@@ -180,9 +188,12 @@ class Home extends React.Component {
                     />
                   </span>
                 </div>
+                <div className="col-sm-1 slider duration"> 
+                  <p className="x-small grey">{getTime(this.state.duration)}</p> 
+                </div>
               </div>
             </div>
-            <div className="col-sm-3">
+            <div className="col-sm-2">
             </div>
           </div>
         </div>

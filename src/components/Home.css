@@ -1,7 +1,7 @@
 .controls {
   position: absolute;
   bottom: 30px;
-  left: 170px;
+  left: 250px;
 }
 
 .slider {
@@ -17,4 +17,8 @@
   background: rgb(31,108,155);
   margin-right: 10px;
   font-size: 12px;
+}
+
+.duration {
+  right: 16px;
 }
