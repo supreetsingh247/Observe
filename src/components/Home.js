@@ -119,7 +119,7 @@ class Home extends React.Component {
     console.log(this.props.gettingTranscript);
     const { stats, transcript, displayChatData } = this.state;
     return (
-      <div>
+      <div style={{ overflow: 'hidden' }}>
         <Header 
           talkListen={stats && stats.talk_listen}
           wordsPerMinute={stats && stats.works_per_minute}
