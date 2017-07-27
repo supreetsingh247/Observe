@@ -110,7 +110,7 @@ class Home extends React.Component {
   }
 
   handleBackward() {
-    this.audio.currentTime += 15;
+    this.audio.currentTime -= 15;
     this.slider.value = this.audio.currentTime;
   }
 
