@@ -6,20 +6,8 @@ import * as homeActions from '../actions/homeActions';
 import audioFile from '../resources/audio.mp3';
 import Header from './Header/Header';
 import Chat from './ChatSection/Chat';
+import styles from './Home.css';
 
-const styles = {
-  table : {
-    'font-family': 'arial',
-    'border-collapse': 'collapse',
-    'width': '100%'
-},
-td: {
-    border: '1px solid #dddddd',
-    'text-align': 'left',
-    padding: '8px'
-}
-
-}
 class Home extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -38,7 +26,8 @@ class Home extends React.Component {
     // this.test = this.test.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
-    this.handleSeek = this.handleSeek.bind(this);
+    this.handleForward = this.handleForward.bind(this);
+    this.handleBackward = this.handleBackward.bind(this);
     this.handleChatSearch = this.handleChatSearch.bind(this);
   }
 
@@ -115,13 +104,14 @@ class Home extends React.Component {
     });  
   }
 
-  handleSeek(e) {
-    const value = e.currentTarget.value;
-    const currentTime = this.audio.currentTime;
-    if (value === 'forward') this.audio.currentTime = currentTime + 15;
-    else this.audio.currentTime = currentTime - 15;
+  handleForward() {
+    this.audio.currentTime += 15;
     this.slider.value = this.audio.currentTime;
-    console.log(Math.round(this.audio.currentTime));
+  }
+
+  handleBackward() {
+    this.audio.currentTime += 15;
+    this.slider.value = this.audio.currentTime;
   }
 
   handleChatSearch(e) {
@@ -145,35 +135,57 @@ class Home extends React.Component {
           loadingStats={this.state.gettingStats}
         />
         <audio ref={(audio) => { this.audio = audio }} src={audioFile} />
-        <input 
-          type="button"
-          value="backward"
-          onClick={this.handleSeek} 
-        />
-        {this.state.showPlay &&
-        <input 
-          type="button" 
-          value="Play"
-          onClick={this.handlePlay} 
-      />}
-        {this.state.showPause &&
-        <input 
-          type="button"
-          value="Pause"
-          onClick={this.handlePause} 
-        />}
-        <input 
-          type="button"
-          value="forward"
-          onClick={this.handleSeek} 
-        />
-        <p><input 
-          ref={(slider) => { this.slider = slider }}
-          type="range"
-          name="points"
-          min="0" max={this.state.duration} 
-        /> 
-        </p>
+        <div clasName="container">
+          <div className="row">
+            <div className="col-sm-3">
+            </div>
+            <div className="col-sm-6" style={{ height: '180px' }}>
+              <div className="row">
+                <div className="col-sm-12 slider">
+                <input 
+                  ref={(slider) => { this.slider = slider }}
+                  type="range"
+                  name="points"
+                  style={{ margin: '0 auto' }}
+                  min="0" max={this.state.duration} 
+                /> 
+                </div>
+                <div style={{ position: 'absolute' }} className="controls col-sm-12">
+                  <span className="buttons" onClick={this.handleBackward}>
+                    <i 
+                      className="fa fa-undo fa-lg" 
+                      aria-hidden="true" 
+                    />
+                  </span>
+                  {this.state.showPlay &&
+                  <span className="buttons" onClick={this.handlePlay} >
+                    <i 
+                      className="fa fa-play fa-lg" 
+                      aria-hidden="true" 
+                    />
+                  </span>
+                  }
+                  {this.state.showPause &&
+                  <span className="buttons" onClick={this.handlePause}>
+                    <i 
+                      className="fa fa-pause fa-lg" 
+                      aria-hidden="true" 
+                    />
+                  </span>
+                  }
+                  <span className="buttons" value="forward" onClick={this.handleForward}>
+                    <i 
+                      className="fa fa-repeat fa-lg" 
+                      aria-hidden="true" 
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-3">
+            </div>
+          </div>
+        </div>
         {transcript && transcript.length > 0 &&
         <Chat 
           searchTerm={this.state.searchTerm}
