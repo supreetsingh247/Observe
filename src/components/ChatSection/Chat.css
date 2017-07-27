@@ -27,3 +27,18 @@
   border-right: thin solid lightgray;
   border-bottom: thin solid lightgray;
 }
+
+.user1 {
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(215,245,218);
+  float: right;
+}
+
+.user2 {
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(223,210,241);
+}
