@@ -3,6 +3,7 @@ import ChatWindow from './ChatWindow';
 import styles from './Chat.css';
 
 const Chat = ({ searchTerm, handleChatSearch, displayChatData }) => {
+  const getTime = seconds => new Date(seconds * 1000).toISOString().substr(11, 8);
   return (
     <div clasName="container">
       <div className="row">
@@ -23,10 +24,25 @@ const Chat = ({ searchTerm, handleChatSearch, displayChatData }) => {
               </div>
             </div>
             <div className="col-sm-9">
-              <div className="chatBox">
-                <ChatWindow
-                  chatData={displayChatData}
-                />
+              <div className="chatBox" id="chat">
+                {displayChatData.map(data => (
+                  <div key={data.conv_no}>
+                    {data.speaker === "Rep" &&
+                      <div id={data.start_time}>
+                        <p className="user1">
+                          {data.line}
+                        </p>
+                      </div>
+                    }
+                    {data.speaker === "Prospect" &&
+                      <div id={data.start_time}>
+                        <p className="user2">
+                          {data.line}
+                        </p>
+                      </div>
+                    }
+                  </div>
+                ))}
               </div>
             </div>
           </div>

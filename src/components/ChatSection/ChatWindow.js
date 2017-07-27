@@ -6,7 +6,7 @@ const ChatWindow = ({ chatData }) => {
   console.log(chatData);
   const getTime = seconds => new Date(seconds * 1000).toISOString().substr(11, 8);
   return (
-    <div>
+    <div id="chat">
       {chatData.map(data => (
         <div key={data.conv_no}>
           {data.speaker === "Rep" &&

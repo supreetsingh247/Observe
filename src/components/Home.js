@@ -33,6 +33,7 @@ class Home extends React.Component {
       chatData: {},
       displayChatData: {},
       searchTerm: '',
+      currentPosition: null,
     };
     // this.test = this.test.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
@@ -54,6 +55,7 @@ class Home extends React.Component {
     this.audio.onplay = () => {
       this.currentTimeInterval = setInterval( () => {
         this.slider.value = this.audio.currentTime;
+        this.moveChat(this.audio.currentTime);
         }, 500);
     };
     this.audio.onpause = () => {
@@ -61,8 +63,8 @@ class Home extends React.Component {
     };
     // Seek functionality
     this.slider.onchange = (e) => {
-      clearInterval(this.currentTimeInterval);
       this.audio.currentTime = e.target.value;
+      this.moveChat(e.target.value);
     };
   }
 
@@ -79,6 +81,22 @@ class Home extends React.Component {
     }
     this.setState({ gettingTranscript: nextProps.gettingTranscript });
     // Update chatData and displaychatData on new props
+  }
+
+  moveChat(pos) {
+    const { transcript } = this.state;
+    let position = 0;
+    if (transcript && transcript.length > 0) {
+      for (let i = 0; i < transcript.length; i += 1) {
+        if (pos <= parseInt(transcript[i].start_time)) {
+          position = parseInt(transcript[i].start_time);
+          break;
+        }
+      }
+      const myElement = document.getElementById(position);
+      const topPos = myElement.offsetTop;
+      document.getElementById('chat').scrollTop = topPos;
+    }
   }
 
   handlePlay() {
@@ -119,7 +137,7 @@ class Home extends React.Component {
     console.log(this.props.gettingTranscript);
     const { stats, transcript, displayChatData } = this.state;
     return (
-      <div style={{ overflow: 'hidden' }}>
+      <div>
         <Header 
           talkListen={stats && stats.talk_listen}
           wordsPerMinute={stats && stats.works_per_minute}
