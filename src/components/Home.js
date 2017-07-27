@@ -88,7 +88,7 @@ class Home extends React.Component {
     let position = 0;
     if (transcript && transcript.length > 0) {
       for (let i = 0; i < transcript.length; i += 1) {
-        if (pos <= parseInt(transcript[i].start_time)) {
+        if (pos < parseInt(transcript[i].start_time)) {
           position = parseInt(transcript[i].start_time);
           break;
         }
@@ -137,7 +137,7 @@ class Home extends React.Component {
     console.log(this.props.gettingTranscript);
     const { stats, transcript, displayChatData } = this.state;
     return (
-      <div>
+      <div style={{ overflowY: 'hidden' }}>
         <Header 
           talkListen={stats && stats.talk_listen}
           wordsPerMinute={stats && stats.works_per_minute}
